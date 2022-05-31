@@ -4,16 +4,19 @@ import pygame_gui
 
 pygame.init()
 
-pygame.display.set_caption('Quick Start')
-window_surface = pygame.display.set_mode((800, 600))
+pygame.display.set_caption('memory game')
+window_surface = pygame.display.set_mode((600 , 600))
 
-background = pygame.Surface((800, 600))
+background = pygame.Surface((600, 600))
 background.fill(pygame.Color('#000000'))
 
 manager = pygame_gui.UIManager((800, 600))
 
-hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 275), (100, 50)),
-                                            text='Say Hello',
+card1 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((50, 50), (100, 100)),
+                                            text='click',
+                                            manager=manager)
+card2 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((250, 50), (100, 100)),
+                                            text='click',
                                             manager=manager)
 
 clock = pygame.time.Clock()
@@ -26,13 +29,22 @@ while is_running:
             is_running = False
 
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == hello_button:
-                print('Hello World!')
+            if event.ui_element == card1:
+                print("clicked")
+
+        if event.type == pygame_gui.UI_BUTTON_PRESSED:
+            if event.ui_element == card2:
+                print("clicked")
+
 
         manager.process_events(event)
 
     manager.update(time_delta)
 
+    window_surface.blit(background, (0, 0))
+    manager.draw_ui(window_surface)
+
+    pygame.display.update()
     window_surface.blit(background, (0, 0))
     manager.draw_ui(window_surface)
 
