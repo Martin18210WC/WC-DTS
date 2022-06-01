@@ -1,25 +1,34 @@
+#Martins memory game
 import pygame
 import pygame_gui
-
+import random
 
 pygame.init()
 
-pygame.display.set_caption('memory game')
-window_surface = pygame.display.set_mode((600 , 600))
-
-background = pygame.Surface((600, 600))
-background.fill(pygame.Color('#000000'))
-
+white = (255,255,255)
+black = (0,0,0)
+grey = (80,80,80)
+Width = 800
+Height = 600
+pygame.display.set_caption('Memory game')
+screen = pygame.display.set_mode((Width, Height))
 manager = pygame_gui.UIManager((800, 600))
-
-card1 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((50, 50), (100, 100)),
-                                            text='click',
-                                            manager=manager)
-card2 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((250, 50), (100, 100)),
-                                            text='click',
-                                            manager=manager)
-
 clock = pygame.time.Clock()
+screen.fill(black)
+
+font = pygame.font.SysFont('arial', 40)
+title = font.render('Memory Game', True, white)
+box = title.get_rect(midtop = (Width // 2,10))
+screen.blit(title,box)
+
+JACK = 'jack'
+QUEEN ='queen'
+KING ='king'
+ACE ='ace'
+JOKER ='joker'
+
+all_cards= (JACK, QUEEN, KING, ACE, JOKER)
+
 is_running = True
 
 while is_running:
@@ -28,24 +37,7 @@ while is_running:
         if event.type == pygame.QUIT:
             is_running = False
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card1:
-                print("clicked")
-
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card2:
-                print("clicked")
-
-
-        manager.process_events(event)
-
+    pygame.display.update()
     manager.update(time_delta)
 
-    window_surface.blit(background, (0, 0))
-    manager.draw_ui(window_surface)
-
-    pygame.display.update()
-    window_surface.blit(background, (0, 0))
-    manager.draw_ui(window_surface)
-
-    pygame.display.update()
+pygame.quit()
