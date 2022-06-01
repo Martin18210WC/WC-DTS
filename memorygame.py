@@ -24,52 +24,52 @@ box = title.get_rect(midtop=(Width // 2, 5))
 screen.blit(title, box)
 
 
-card1 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((100, 200), (100, 100)),
+card1 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((55, 100), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card2 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((300, 200), (100, 100)),
+card2 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((255, 100), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card3 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 200), (100, 100)),
+card3 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((455, 100), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card4 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((700, 200), (100, 100)),
+card4 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((655, 100), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card5 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((100, 300), (100, 100)),
+card5 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((55, 220), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card6 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((300, 300), (100, 100)),
+card6 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((255, 220), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card7 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 300), (100, 100)),
+card7 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((455, 220), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card8 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((700, 300), (100, 100)),
+card8 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((655, 220), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card9 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((100, 400), (100, 100)),
+card9 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((55, 340), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card10 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((300, 400), (100, 100)),
+card10 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((255, 340), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card11 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 400), (100, 100)),
+card11 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((455, 340), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card12 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((700, 400), (100, 100)),
+card12 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((655, 340), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card13 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((100, 500), (100, 100)),
+card13 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((55, 460), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card14 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((300, 500), (100, 100)),
+card14 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((255, 460), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card15 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((500, 500), (80, 80)),
+card15 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((455, 460), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-card16 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((700, 500), (80, 80)),
+card16 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((655, 460), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
 JACK = 'jack'
@@ -86,11 +86,8 @@ while is_running:
             if event.ui_element == card1:
                 pygame.time.wait(3000)
                 event.ui_element.set_text(JACK)
-                pygame.time.wait(3000)
                 if event.ui_element == card1:
-                    pygame.time.wait(3000)
                     event.ui_element.set_text('click')
-                    pygame.time.wait(3000)
 
 
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
