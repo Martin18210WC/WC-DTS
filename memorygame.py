@@ -72,7 +72,16 @@ card15 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((455, 460), (100
 card16 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((655, 460), (100, 100)),
                                             text='CLICK',
                                             manager=manager)
-JACK = 'jack'
+
+Card_count = 0
+CardJ = 0
+CardQ = 0
+CardK = 0
+CardJOKER = 0
+CardA = 0
+CardTWO = 0
+CardTRES = 0
+CardFOUR = 0
 
 is_running = True
 
@@ -82,75 +91,133 @@ while is_running:
         if event.type == pygame.QUIT:
             is_running = False
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card1:
-                pygame.time.wait(3000)
-                event.ui_element.set_text(JACK)
-                if event.ui_element == card1:
-                    event.ui_element.set_text('click')
+        if (Card_count < 3):
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                 if event.ui_element == card1:
+                     event.ui_element.set_text('jack')
+                     Card_count += 1
+                     CardJ += 1
 
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card2:
-                event.ui_element.set_text("queen")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                 if event.ui_element == card2:
+                     event.ui_element.set_text("queen")
+                     Card_count += 1
+                     CardQ += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card3:
-                event.ui_element.set_text("king")
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card4:
-                event.ui_element.set_text("ace")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card3:
+                    event.ui_element.set_text("king")
+                    Card_count += 1
+                    CardK += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card5:
-                event.ui_element.set_text("joker")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card4:
+                    event.ui_element.set_text("ace")
+                    Card_count += 1
+                    CardA += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card6:
-                event.ui_element.set_text("two")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card5:
+                    event.ui_element.set_text("joker")
+                    Card_count += 1
+                    CardJOKER += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card7:
-                event.ui_element.set_text("three")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card6:
+                    event.ui_element.set_text("two")
+                    Card_count += 1
+                    CardTWO += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card8:
-                event.ui_element.set_text("four")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card7:
+                    event.ui_element.set_text("three")
+                    Card_count += 1
+                    CardTRES += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card9:
-                event.ui_element.set_text("jack")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card8:
+                    event.ui_element.set_text("four")
+                    Card_count += 1
+                    CardFOUR += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card10:
-                event.ui_element.set_text("queen")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card9:
+                    event.ui_element.set_text("jack")
+                    Card_count += 1
+                    CardJ += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card11:
-                event.ui_element.set_text("king")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card10:
+                    event.ui_element.set_text("queen")
+                    Card_count += 1
+                    CardQ += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card12:
-                event.ui_element.set_text("ace")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card11:
+                    event.ui_element.set_text("king")
+                    Card_count += 1
+                    CardK += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card13:
-                event.ui_element.set_text("joker")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card12:
+                    event.ui_element.set_text("ace")
+                    Card_count += 1
+                    CardA += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card14:
-                event.ui_element.set_text("two")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card13:
+                    event.ui_element.set_text("joker")
+                    Card_count += 1
+                    CardJOKER += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card15:
-                event.ui_element.set_text("three")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card14:
+                    event.ui_element.set_text("two")
+                    Card_count += 1
+                    CardTWO += 1
 
-        if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if event.ui_element == card16:
-                event.ui_element.set_text("four")
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card15:
+                    event.ui_element.set_text("three")
+                    Card_count += 1
+                    CardTRES += 1
 
-        manager.process_events(event)
+             if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                if event.ui_element == card16:
+                    event.ui_element.set_text("four")
+                    Card_count += 1
+                    CardFOUR += 1
+
+
+
+
+        else:
+           print('no buttons closed')
+           print("only two buttons allowed")
+           card1.set_text('CLICK')
+           card2.set_text('CLICK')
+           card3.set_text('CLICK')
+           card4.set_text('CLICK')
+           card5.set_text('CLICK')
+           card6.set_text('CLICK')
+           card7.set_text('CLICK')
+           card8.set_text('CLICK')
+           card9.set_text('CLICK')
+           card10.set_text('CLICK')
+           card11.set_text('CLICK')
+           card12.set_text('CLICK')
+           card13.set_text('CLICK')
+           card14.set_text('CLICK')
+           card15.set_text('CLICK')
+           card16.set_text('CLICK')
+
+           Card_count = 0
+            #only open two then close them both then set cardcount to 0
+
+
+    manager.process_events(event)
 
     pygame.display.update()
     manager.update(time_delta)
@@ -166,3 +233,4 @@ while is_running:
 pygame.display.update()
 
 pygame.quit()
+
