@@ -5,232 +5,195 @@ import random
 
 pygame.init()
 
+#colors and window size
 white = (255, 255, 255)
 black = (0, 0, 0)
-grey = (80, 80, 80)
-Width = 800
-Height = 600
-pygame.display.set_caption('Memory game 1')
-screen = pygame.display.set_mode((Width, Height))
-background = pygame.Surface((Width, Height))
-background.fill(pygame.Color('#000000'))
-manager = pygame_gui.UIManager((800, 600))
-clock = pygame.time.Clock()
-screen.fill(black)
-
-font = pygame.font.SysFont('arial', 40)
-title = font.render('Memory Game', True, white)
-box = title.get_rect(midtop=(Width // 2, 5))
-screen.blit(title, box)
+blue = (0, 0, 255)
+green = (0, 255, 0)
+red = (255, 0, 0)
+gray = (128, 128, 128)
+width = 450
+height = 600
 
 
-card1 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((55, 100), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card2 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((255, 100), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card3 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((455, 100), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card4 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((655, 100), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card5 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((55, 220), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card6 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((255, 220), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card7 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((455, 220), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card8 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((655, 220), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card9 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((55, 340), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card10 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((255, 340), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card11 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((455, 340), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card12 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((655, 340), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card13 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((55, 460), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card14 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((255, 460), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card15 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((455, 460), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
-card16 = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((655, 460), (100, 100)),
-                                            text='CLICK',
-                                            manager=manager)
+timer = pygame.time.Clock()
 
-Card_count = 0
-CardJ = 0
-CardQ = 0
-CardK = 0
-CardJOKER = 0
-CardA = 0
-CardTWO = 0
-CardTRES = 0
-CardFOUR = 0
+#board layout
+rows = 6
+cols = 6
 
-is_running = True
+correct = [[0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0, 0]]
+#other variables
+options_list = []
+spaces = []
+used = []
+new_board = True
+first_guess = False
+second_guess = False
+first_guess_num = 0
+second_guess_num = 0
+score = 0
+best_score = 0
+matches = 0
+game_over = False
 
-while is_running:
-    time_delta = clock.tick(60)/1000.0
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            is_running = False
+# screen and font sizes
+screen = pygame.display.set_mode([width, height])
+pygame.display.set_caption("Memory Game")
+title_font = pygame.font.SysFont('arial', 60)
+small_font = pygame.font.SysFont('arial', 30)
+restart_font = pygame.font.SysFont('arial', 50)
+winner_font = pygame.font.SysFont('arial', 40)
 
-        if (Card_count < 3):
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                 if event.ui_element == card1:
-                     event.ui_element.set_text('jack')
-                     Card_count += 1
-                     CardJ += 1
+#define draw background function
+def draw_backgrounds():
+    top_menu = pygame.draw.rect(screen, blue, [0, 0, width, 100])
+    title_text = title_font.render('Memory Game', True, white)
+    screen.blit(title_text, (65, 15))
+    board_space = pygame.draw.rect(screen, gray, [0, 100, width, height - 200])
+    bottom_menu = pygame.draw.rect(screen, blue, [0, height - 100, width, 100])
+    restart_button = pygame.draw.rect(screen, gray, [10, height - 90, 150, 80], 0, 5)
+    restart_text = restart_font.render('Restart', True, white)
+    screen.blit(restart_text, (10, 520))
+    score_text = small_font.render(f'Current Turns: {score}', True, white)
+    screen.blit(score_text, (250, 520))
+    best_text = small_font.render(f'High Score: {best_score}', True, white)
+    screen.blit(best_text, (250, 560))
+    return restart_button
 
+#define generate memory board function
+def generate_board():
+    global options_list
+    global spaces
+    global used
+    for item in range(rows * cols // 2):
+        options_list.append(item)
 
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                 if event.ui_element == card2:
-                     event.ui_element.set_text("queen")
-                     Card_count += 1
-                     CardQ += 1
-
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card3:
-                    event.ui_element.set_text("king")
-                    Card_count += 1
-                    CardK += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card4:
-                    event.ui_element.set_text("ace")
-                    Card_count += 1
-                    CardA += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card5:
-                    event.ui_element.set_text("joker")
-                    Card_count += 1
-                    CardJOKER += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card6:
-                    event.ui_element.set_text("two")
-                    Card_count += 1
-                    CardTWO += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card7:
-                    event.ui_element.set_text("three")
-                    Card_count += 1
-                    CardTRES += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card8:
-                    event.ui_element.set_text("four")
-                    Card_count += 1
-                    CardFOUR += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card9:
-                    event.ui_element.set_text("jack")
-                    Card_count += 1
-                    CardJ += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card10:
-                    event.ui_element.set_text("queen")
-                    Card_count += 1
-                    CardQ += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card11:
-                    event.ui_element.set_text("king")
-                    Card_count += 1
-                    CardK += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card12:
-                    event.ui_element.set_text("ace")
-                    Card_count += 1
-                    CardA += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card13:
-                    event.ui_element.set_text("joker")
-                    Card_count += 1
-                    CardJOKER += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card14:
-                    event.ui_element.set_text("two")
-                    Card_count += 1
-                    CardTWO += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card15:
-                    event.ui_element.set_text("three")
-                    Card_count += 1
-                    CardTRES += 1
-
-             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == card16:
-                    event.ui_element.set_text("four")
-                    Card_count += 1
-                    CardFOUR += 1
-
-
-
-
+    for item in range(rows * cols):
+        piece = options_list[random.randint(0, len(options_list)-1)]
+        spaces.append(piece)
+        if piece in used:
+            used.remove(piece)
+            options_list.remove(piece)
         else:
-           print('no buttons closed')
-           print("only two buttons allowed")
-           card1.set_text('CLICK')
-           card2.set_text('CLICK')
-           card3.set_text('CLICK')
-           card4.set_text('CLICK')
-           card5.set_text('CLICK')
-           card6.set_text('CLICK')
-           card7.set_text('CLICK')
-           card8.set_text('CLICK')
-           card9.set_text('CLICK')
-           card10.set_text('CLICK')
-           card11.set_text('CLICK')
-           card12.set_text('CLICK')
-           card13.set_text('CLICK')
-           card14.set_text('CLICK')
-           card15.set_text('CLICK')
-           card16.set_text('CLICK')
+            used.append(piece)
 
-           Card_count = 0
-            #only open two then close them both then set cardcount to 0
+# define draw board function
+def draw_board():
+    global rows
+    global cols
+    global correct
+    board_list = []
+    for y in range(cols):
+        for x in range(rows):
+            piece = pygame.draw.rect(screen, white, [y * 75 + 12, x * 65 + 112, 50, 50], 0, 4)
+            board_list.append(piece)
 
 
-    manager.process_events(event)
 
-    pygame.display.update()
-    manager.update(time_delta)
-    screen.blit(background, (0, 0))
-    screen.blit(title, box)
-    manager.draw_ui(screen)
+    for r in range(rows):
+        for c in range(cols):
+            if correct[r][c] == 1:
+                pygame.draw.rect(screen, green, [c * 75 + 10, r * 65 + 110, 54, 54], 3, 4)
+                piece_text = small_font.render(f'{spaces[c * rows + r]}', True, black)
+                screen.blit(piece_text, (c * 75 + 18, r * 65 + 120))
+    return board_list
 
-    pygame.display.update()
-    screen.blit(background, (0, 0))
-    screen.blit(title, box)
-    manager.draw_ui(screen)
+#define guess checking function
+def check_guesses(first, second):
+    global spaces
+    global correct
+    global score
+    global matches
+    if spaces[first] == spaces[second]:
+        col1 = first // rows
+        col2 = second // rows
+        row1 = first - (col1 * rows)
+        row2 = second - (col2 * rows)
+        if correct[row1][col1] == 0 and correct[row2][col2] == 0:
+            correct[row1][col1] = 1
+            correct[row2][col2] = 1
+            score += 1
+            matches += 1
 
-pygame.display.update()
+    else:
+        score += 1
 
+#main function
+running = True
+while running:
+    timer.tick(60)/1000.0 #FPS
+    screen.fill(white)
+#board
+    if new_board:
+        generate_board()
+        new_board = False
+
+    restart = draw_backgrounds()
+    board = draw_board()
+
+#guesses
+    if first_guess and second_guess:
+        check_guesses(first_guess_num, second_guess_num)
+        pygame.time.delay(1000)
+        first_guess = False
+        second_guess = False
+
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:       #to leave (X on the top right)
+            running = False
+        if event.type ==  pygame.MOUSEBUTTONDOWN:
+            for i in range(len(board)):
+                button = board[i]
+                if not game_over:
+                   if button.collidepoint(event.pos) and not first_guess:
+                       first_guess = True
+                       first_guess_num = i
+                   if button.collidepoint(event.pos) and not second_guess and first_guess and i != first_guess_num:
+                        second_guess = True
+                        second_guess_num = i
+            if restart.collidepoint(event.pos):
+                options_list = []
+                used = []
+                spaces = []
+                new_board = True
+                score = 0
+                matches = 0
+                first_guess = False
+                second_guess = False
+                correct = [[0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0],
+                           [0, 0, 0, 0, 0, 0]]
+                game_over = False
+#game over
+    if matches == rows * cols // 2:
+        game_over = True
+        winner = pygame.draw.rect(screen, gray, [10, HEIGHT - 300, WIDTH - 20, 80], 0, 5)
+        winner_text = winner_font.render(f'YOU WIN SCORE: {score} TURNS', True, blue)
+        screen.blit(winner_text, (10, HEIGHT - 290))
+        if best_score > score or best_score == 0:
+            best_score = score
+
+
+    if first_guess:
+        piece_text = small_font.render(f'{spaces[first_guess_num]}', True, blue)
+        location = (first_guess_num // rows * 75 + 18, (first_guess_num - (first_guess_num // rows * rows)) * 65 + 120)
+        screen.blit(piece_text, (location))
+
+    if second_guess:
+        piece_text = small_font.render(f'{spaces[second_guess_num]}', True, blue)
+        location = (second_guess_num // rows * 75 + 18, (second_guess_num - (second_guess_num // rows * rows)) * 65 + 120)
+        screen.blit(piece_text, (location))
+
+
+    pygame.display.flip()
 pygame.quit()
-
