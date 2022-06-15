@@ -177,9 +177,9 @@ while running:
 #game over
     if matches == rows * cols // 2:
         game_over = True
-        winner = pygame.draw.rect(screen, gray, [10, HEIGHT - 300, WIDTH - 20, 80], 0, 5)
+        winner = pygame.draw.rect(screen, gray, [10, height - 300, width - 20, 80], 0, 5)
         winner_text = winner_font.render(f'YOU WIN SCORE: {score} TURNS', True, blue)
-        screen.blit(winner_text, (10, HEIGHT - 290))
+        screen.blit(winner_text, (10, height - 290))
         if best_score > score or best_score == 0:
             best_score = score
 
